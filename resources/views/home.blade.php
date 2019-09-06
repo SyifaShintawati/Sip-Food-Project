@@ -56,7 +56,7 @@
                 <nav class="navbar-sidebar2">
                     <ul class="list-unstyled navbar__list">
                         <li class="active has-sub">
-                            <a class="js-arrow" href="#">
+                            <a class="js-arrow" href="{{url ('/home')}}">
                                 <i class="fas fa-tachometer-alt"></i>Home
                             </a>
                         </li>
