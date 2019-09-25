@@ -66,7 +66,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#">
+                            <a href="{{url ('/customer')}}">
                                 <i class="fas fa-users"></i>Cutomers</a>
                         </li>
                     </ul>

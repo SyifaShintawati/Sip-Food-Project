@@ -1,0 +1,51 @@
+<div class="modal fade" id="minuman" tabindex="1" data-backdrop="static" data-keyboard="false" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+
+            <form id="form-minuman" method="post" data-toggle="validator">{{ csrf_field() }} {{ method_field('POST') }}
+
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true"> &times; </span>
+                    </button>
+                    <h3 class="modal-title"></h3>
+                </div>
+
+                <div class="modal-body">
+                    
+                        <input type="hidden" id="id" name="id">
+
+                    <div class="form-group">
+                            <label for="id_supplier" class="col-form-label">{{ __('Penyuplai') }}</label>
+                                <select name="id_supplier" id="id_supplier" class="form-control" autofocus>
+                                    <option>Pilih Supplier</option>
+                                    @foreach($supplier as $value)
+                                        <option value="{{$value->id}}">{{$value->nama_supplier}}</option>
+                                    @endforeach
+                                </select>
+                        </div>
+
+                    <div class="form-group">
+                        <label for="nama_minuman" class="col-form-label">{{ __('Nama Minuman') }}</label>
+                            <input name="nama_minuman" id="nama_minuman" type="text" class="form-control" required autocomplete="off" autofocus>
+                    </div>
+
+                   <div class="form-group">
+                        <label for="harga_minuman" class="col-form-label">{{ __('Harga Minuman') }}</label>
+                            <input name="harga_minuman" id="harga_minuman" type="text" class="form-control" required autocomplete="off" autofocus>
+
+                    <div class="form-group">
+                        <label for="stok_minuman" class="col-form-label">{{ __('Stok Minuman') }}</label>
+                            <input name="stok_minuman" id="stok_minuman" type="text" class="form-control" required autocomplete="off">
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary btn-save">Submit!</button>
+                    </div>
+
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
