@@ -16,26 +16,32 @@
                         <input type="hidden" id="id" name="id">
 
                     <div class="form-group">
-                            <label for="id_supplier" class="col-form-label">{{ __('Penyuplai') }}</label>
-                                <select name="id_supplier" id="id_supplier" class="form-control" autofocus>
-                                    <option>Pilih Supplier</option>
-                                    @foreach($supplier as $value)
-                                        <option value="{{$value->id}}">{{$value->nama_supplier}}</option>
-                                    @endforeach
-                                </select>
-                        </div>
-
-                    <div class="form-group">
                         <label for="nama_minuman" class="col-form-label">{{ __('Nama Minuman') }}</label>
                             <input name="nama_minuman" id="nama_minuman" type="text" class="form-control" required autocomplete="off" autofocus>
                     </div>
 
+                    <div class="form-group">
+                        <label for="deskripsi" class="col-form-label">{{ __('Deskripsi Produk') }}</label>
+                            <input name="deskripsi" id="deskripsi" type="text" class="form-control" required autocomplete="off" autofocus>
+                    </div>
+
                    <div class="form-group">
-                        <label for="harga_minuman" class="col-form-label">{{ __('Harga Minuman') }}</label>
+                        <label for="harga_minuman" class="col-form-label">{{ __('Harga Asli') }}</label>
                             <input name="harga_minuman" id="harga_minuman" type="text" class="form-control" required autocomplete="off" autofocus>
+                   </div>
+
+                   <div class="form-group">
+                       <label for="pajak_minuman" class="col-form-label">{{ __('Harga Jual') }}</label>
+                           <input name="pajak_minuman" id="pajak_minuman" type="text" class="form-control" required autocomplete="off" readonly>
+                   </div>
+
+                   <div class="form-group">
+                       <label for="foto" class="col-form-label">{{ __('Foto') }}</label>
+                           <input name="foto" id="foto" type="file" class="form-control" required autocomplete="off">
+                   </div>
 
                     <div class="form-group">
-                        <label for="stok_minuman" class="col-form-label">{{ __('Stok Minuman') }}</label>
+                        <label for="stok_minuman" class="col-form-label">{{ __('Stok') }}</label>
                             <input name="stok_minuman" id="stok_minuman" type="text" class="form-control" required autocomplete="off">
                     </div>
 

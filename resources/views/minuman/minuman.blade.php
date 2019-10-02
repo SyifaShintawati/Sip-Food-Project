@@ -45,13 +45,16 @@
             <ul class="nav navbar-nav">
               <li><a href="{{url ('/home') }}">Halaman Utama</a></li>
               <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Data Data <span class="caret"></span></a>
+                <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Data Produk<span class="caret"></span></a>
             <ul class="dropdown-menu">
-              <li><a href="#">Data</a></li>
+              <li><a href="{{url ('/makanan') }}">Makanan</a></li>
               <li role="separator" class="divider"></li>
-              <li><a href="#">Data</a></li>
+              <li><a href="{{url ('/minuman') }}">Minuman</a></li>
             </ul>
               </li>
+              <li><a href="{{url ('/supplier') }}">Data Penyuplai</a></li>
+              <li><a href="{{url ('/customer') }}">Customer</a></li>
+              <li><a href="{{url ('/transaksi') }}">Transaksi Pesanan</a></li>
             </ul>
       
             <ul class="nav navbar-nav navbar-right">
@@ -72,8 +75,8 @@
         </div>
       </nav>
 
-    <div class="container"><br>
-      <div class="row">
+    <!-- <div class="container"><br>
+      <div class="row"> -->
         <div class="col-md-12">
           <div class="panel panel-default">
             <div class="panel-heading">
@@ -86,11 +89,13 @@
                   <thead>
                     <tr>
                       <th width="30">No</th>
-                      <th>Penyuplai</th>
                       <th>Nama Minuman</th>
-                      <th>Harga Minuman</th>
-                      <th>Stok Minuman</th>
-                      <th>Aksi</th>
+                      <th  width="180">Deskripsi</th>
+                      <th>Foto</th>
+                      <th width="110">Harga Asli (Rp)</th>
+                      <th width="110">Harga Jual (Rp)</th>
+                      <th>Stok</th>
+                      <th width="140"></th>
                     </tr>
                   </thead>
                     <tbody></tbody>
@@ -99,8 +104,8 @@
               </div>
           </div>
         </div>
-      </div>
-    </div>
+      <!-- </div>
+    </div> -->
 
 <!-- Script JQuery -->
 <script src="{{ asset('assets/jquery/jquery-1.12.4.min.js') }}"></script>
@@ -124,12 +129,20 @@
       ajax: "{{route ('api.minuman') }}",
       columns: [
         {data: 'DT_RowIndex', name: 'id'},
-        {data: 'supplier.nama_supplier', name: 'id'},
         {data: 'nama_minuman', name: 'nama'},
+        {data: 'deskripsi', name: 'deskripsi'},
+        {data: 'fotos', name: 'fotos'},
         {data: 'harga_minuman', name: 'harga'},
+        {data: 'pajak_minuman', name: 'pajak'},
         {data: 'stok_minuman', name: 'stok'},
         {data: 'action', name: 'action', orderable: false, searchable: false}
       ]
+    });
+
+    $('#harga_minuman').on('focusout',function(){
+      n1 = $('#harga_minuman').val();
+      n2 = parseFloat(n1) + 1000;
+      $('#pajak_minuman').val(n2);
     });
 
     function tambah() {
@@ -157,7 +170,9 @@
             $('#id').val(data.id);
             $('#id_supplier').val(data.id_supplier);
             $('#nama_minuman').val(data.nama_minuman);
+            $('#deskripsi').val(data.deskripsi);
             $('#harga_minuman').val(data.harga_minuman);
+            $('#pajak_minuman').val(data.pajak_minuman);
             $('#stok_minuman').val(data.stok_minuman);
           },
           error : function() {

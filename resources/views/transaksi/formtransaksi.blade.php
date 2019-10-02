@@ -58,17 +58,17 @@
 
                    <div class="form-group">
                         <label for="total_harga" class="col-form-label">{{ __('Total') }}</label>
-                            <input name="total_harga" id="total_harga" type="text" class="form-control" required autocomplete="off" autofocus>
+                            <input name="total_harga" id="total_harga" type="text" class="form-control" required autocomplete="off" autofocus readonly>
                         </div>
 
                     <div class="form-group">
                         <label for="tgl_pesan" class="col-form-label">{{ __('Tanggal Pesan') }}</label>
-                            <input id="tgl_pesan" name="tgl_pesan" type="text" class="form-control" required autocomplete="off">
+                            <input id="tgl_pesan" name="tgl_pesan" type="text" class="form-control" required autocomplete="off" readonly>
                     </div>
 
                     <div class="form-group">
                         <label for="tgl_kirim" class="col-form-label">{{ __('Tanggal Kirim') }}</label>
-                            <input id="tgl_kirim" name="tgl_kirim" type="text" class="form-control" required autocomplete="off">
+                            <input id="tgl_kirim" name="tgl_kirim" type="text" class="form-control" required autocomplete="off" readonly>
                     </div>
 
                     <div class="form-group">

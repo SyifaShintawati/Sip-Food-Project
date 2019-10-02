@@ -82,7 +82,7 @@
                     <form method="POST" action="{{ route('login') }}" aria-label="{{ __('Login') }}">
                         @csrf
 
-                        <center><img src="{{ asset('gambar/sipfood2.png') }}" width="400px" height="150px"></center><br><br>
+                        <center><img src="{{ asset('gambar/sipfood2.png') }}" width="300px" height="150px"></center><br><br>
 
                         <div class="form-group">
                             <label for="email">{{ __('E-Mail Address') }}</label>

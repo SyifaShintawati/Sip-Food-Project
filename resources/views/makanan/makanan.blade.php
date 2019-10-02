@@ -43,15 +43,18 @@
         </div>
           <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-              <li><a href="{{url ('/home') }}">Halaman Utama</a></li>
+               <li><a href="{{url ('/home') }}">Halaman Utama</a></li>
               <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Data Data <span class="caret"></span></a>
+                <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Data Produk<span class="caret"></span></a>
             <ul class="dropdown-menu">
-              <li><a href="#">Data</a></li>
+              <li><a href="{{url ('/makanan') }}">Makanan</a></li>
               <li role="separator" class="divider"></li>
-              <li><a href="#">Data</a></li>
+              <li><a href="{{url ('/minuman') }}">Minuman</a></li>
             </ul>
               </li>
+              <li><a href="{{url ('/supplier') }}">Data Penyuplai</a></li>
+              <li><a href="{{url ('/customer') }}">Customer</a></li>
+              <li><a href="{{url ('/transaksi') }}">Transaksi Pesanan</a></li>
             </ul>
       
             <ul class="nav navbar-nav navbar-right">
@@ -72,8 +75,8 @@
         </div>
       </nav>
 
-    <div class="container"><br>
-      <div class="row">
+    <!-- <div class="container"><br>
+      <div class="row"> -->
         <div class="col-md-12">
           <div class="panel panel-default">
             <div class="panel-heading">
@@ -86,11 +89,13 @@
                   <thead>
                     <tr>
                       <th width="30">No</th>
-                      <th>Penyuplai</th>
                       <th>Nama Makanan</th>
-                      <th>Harga Makanan</th>
-                      <th>Stok Makanan</th>
-                      <th>Aksi</th>
+                      <th  width="180">Deskripsi</th>
+                      <th>Foto</th>
+                      <th width="110">Harga Asli (Rp)</th>
+                      <th width="110">Harga Jual (Rp)</th>
+                      <th>Stok</th>
+                      <th width="140"></th>
                     </tr>
                   </thead>
                     <tbody></tbody>
@@ -99,9 +104,9 @@
               </div>
           </div>
         </div>
-      </div>
+<!--       </div>
     </div>
-
+ -->
 <!-- Script JQuery -->
 <script src="{{ asset('assets/jquery/jquery-1.12.4.min.js') }}"></script>
 <script src="{{ asset('assets/bootstrap/js/bootstrap.min.js') }}"></script>
@@ -124,12 +129,20 @@
       ajax: "{{route ('api.makanan') }}",
       columns: [
         {data: 'DT_RowIndex', name: 'id'},
-        {data: 'supplier.nama_supplier', name: 'id'},
         {data: 'nama_makanan', name: 'nama'},
+        {data: 'deskripsi', name: 'deskripsi'},
+        {data: 'fotos', name: 'fotos'},
         {data: 'harga_makanan', name: 'harga'},
-        {data: 'stok_makanan', name: 'stok'},
+        {data: 'pajak_makanan', name: 'pajak'},
+        {data: 'stok_makanan', name: 'stok_makanan'},
         {data: 'action', name: 'action', orderable: false, searchable: false}
       ]
+    });
+
+    $('#harga_makanan').on('focusout',function(){
+      n1 = $('#harga_makanan').val();
+      n2 = parseFloat(n1) + 1000;
+      $('#pajak_makanan').val(n2);
     });
 
     function tambah() {
@@ -157,7 +170,9 @@
             $('#id').val(data.id);
             $('#id_supplier').val(data.id_supplier);
             $('#nama_makanan').val(data.nama_makanan);
+            $('#deskripsi').val(data.deskripsi);
             $('#harga_makanan').val(data.harga_makanan);
+            $('#pajak_makanan').val(data.pajak_makanan);
             $('#stok_makanan').val(data.stok_makanan);
           },
           error : function() {

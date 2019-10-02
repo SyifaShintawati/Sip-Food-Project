@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateMinumanTable extends Migration
+class CreateKategoriTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,9 @@ class CreateMinumanTable extends Migration
      */
     public function up()
     {
-        Schema::create('minuman', function (Blueprint $table) {
+        Schema::create('kategori', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('nama_minuman');
-            $table->string('deskripsi');
-            $table->integer('harga_minuman');
-            $table->integer('pajak_minuman');
-            $table->string('foto')->nullable();
-            $table->integer('stok_minuman');
+            $table->string('jenis_kategori');
             $table->timestamps();
         });
     }
@@ -32,6 +27,6 @@ class CreateMinumanTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('minuman');
+        Schema::dropIfExists('kategori');
     }
 }

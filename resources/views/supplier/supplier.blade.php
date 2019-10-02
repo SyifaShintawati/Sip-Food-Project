@@ -45,13 +45,15 @@
             <ul class="nav navbar-nav">
               <li><a href="{{url ('/home') }}">Halaman Utama</a></li>
               <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Data Data <span class="caret"></span></a>
+                <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Data Produk<span class="caret"></span></a>
             <ul class="dropdown-menu">
-              <li><a href="#">Data</a></li>
+              <li><a href="{{url ('/makanan') }}">Makanan</a></li>
               <li role="separator" class="divider"></li>
-              <li><a href="#">Data</a></li>
+              <li><a href="{{url ('/minuman') }}">Minuman</a></li>
             </ul>
               </li>
+              <li><a href="{{url ('/customer') }}">Customer</a></li>
+              <li><a href="{{url ('/transaksi') }}">Transaksi Pesanan</a></li>
             </ul>
       
             <ul class="nav navbar-nav navbar-right">

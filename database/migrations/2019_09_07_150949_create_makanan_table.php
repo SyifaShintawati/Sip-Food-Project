@@ -15,10 +15,11 @@ class CreateMakananTable extends Migration
     {
         Schema::create('makanan', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('id_supplier');
-            $table->foreign('id_supplier')->references('id')->on('supplier')->onDelete('CASCADE')->onUpdate('CASCADE');
             $table->string('nama_makanan');
+            $table->string('deskripsi');
             $table->integer('harga_makanan');
+            $table->integer('pajak_makanan');
+            $table->string('foto')->nullable();
             $table->integer('stok_makanan');
             $table->timestamps();
         });

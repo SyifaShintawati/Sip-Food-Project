@@ -10,7 +10,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="icon" href="{{ asset('gambar/download.png') }}">
 
-    <title>SipFood | Customer</title>
+    <title>SipFood | Kategori</title>
 
     <!-- Bootstrap core CSS -->
     <link href="{{ asset('assets/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
@@ -24,7 +24,7 @@
 
     <link href="{{ asset('assets/bootstrap/css/ie10-viewport-bug-workaround.css') }}" rel="stylesheet">
 
-    <!-- Custom styles -->
+    <!-- custom styles -->
     <link href="{{ asset('assets/bootstrap/css/navbar-fixed-top.css') }}" rel="stylesheet">
 
   </head>
@@ -43,16 +43,17 @@
         </div>
           <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-              <li><a href="{{url ('/home') }}">Halaman Utama</a></li>
+               <li><a href="{{url ('/home') }}">Halaman Utama</a></li>
               <li class="dropdown">
-                <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Data Produk<span class="caret"></span></a>
+                <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Data kategori<span class="caret"></span></a>
             <ul class="dropdown-menu">
-              <li><a href="{{url ('/makanan') }}">Makanan</a></li>
+              <li><a href="{{url ('/kategori') }}">kategori</a></li>
               <li role="separator" class="divider"></li>
               <li><a href="{{url ('/minuman') }}">Minuman</a></li>
             </ul>
               </li>
               <li><a href="{{url ('/supplier') }}">Data Penyuplai</a></li>
+              <li><a href="{{url ('/customer') }}">Customer</a></li>
               <li><a href="{{url ('/transaksi') }}">Transaksi Pesanan</a></li>
             </ul>
       
@@ -79,25 +80,22 @@
         <div class="col-md-12">
           <div class="panel panel-default">
             <div class="panel-heading">
-              <h3> Daftar Customer
+              <h3> Daftar kategori
                 <a onclick="tambah()" class="btn btn-primary pull-right" style="margin-top: -8px">Tambah Data</a>
               </h3>
             </div>
               <div class="panel-body">
-                <table id="customer-table" class="table table-striped">
+                <table id="kategori-table" class="table table-striped">
                   <thead>
                     <tr>
                       <th width="30">No</th>
-                      <th>Nama Customer</th>
-                      <th>Alamat Lengkap</th>
-                      <th>Email Customer</th>
-                      <th>Nomor Telepon</th>
-                      <th>Aksi</th>
+                      <th>Jenis Kategori</th>
+                      <th></th>
                     </tr>
                   </thead>
                     <tbody></tbody>
                 </table>
-                @include('customer.formcustomer')  
+                @include('kategori.formkategori')  
               </div>
           </div>
         </div>
@@ -120,16 +118,13 @@
 <script src="{{ asset('assets/bootstrap/js/ie-emulation-modes-warning.js') }}"></script>
 
   <script type="text/javascript">
-    var table = $('#customer-table').DataTable({
+    var table = $('#kategori-table').DataTable({
       processing : true,
       serverSide : true,
-      ajax: "{{route ('api.customer') }}",
+      ajax: "{{route ('api.kategori') }}",
       columns: [
-        {data: 'id', name: 'id'},
-        {data: 'nama_customer', name: 'nama'},
-        {data: 'alamat_customer', name: 'alamat'},
-        {data: 'email', name: 'email'},
-        {data: 'no_telpon', name: 'no_telpon'},
+        {data: 'DT_RowIndex', name: 'id'},
+        {data: 'jenis_kategori', name: 'jenis'},
         {data: 'action', name: 'action', orderable: false, searchable: false}
       ]
     });
@@ -137,30 +132,27 @@
     function tambah() {
       save_method = "add";
       $('input[name=_method]').val('POST');
-      $('#custom').modal('show');
-      $('#custom form')[0].reset();
-      $('#custom').appendTo("body").modal('show');
-      $('.modal-title').text('Masukan Data Customer');
+      $('#kategori').modal('show');
+      $('#kategori form')[0].reset();
+      $('#kategori').appendTo("body").modal('show');
+      $('.modal-title').text('Tambah Jenis Kategori');
     }
 
     function edit(id) {
         save_method = 'edit';
         $('input[name=_method]').val('PATCH');
-        $('#custom').appendTo("body").modal('show');
-        $('#custom form')[0].reset();
+        $('#kategori').appendTo("body").modal('show');
+        $('#kategori form')[0].reset();
         $.ajax({
-          url: "{{ url('customer') }}" + '/' + id + "/edit",
+          url: "{{ url('kategori') }}" + '/' + id + "/edit",
           type: "GET",
           dataType: "JSON",
           success: function(data) {
-            $('#custom').modal('show');
-            $('.modal-title').text('Ubah Data');
+            $('#kategori').modal('show');
+            $('.modal-title').text('Ubah Data kategori');
 
             $('#id').val(data.id);
-            $('#nama_customer').val(data.nama_customer);
-            $('#alamat_customer').val(data.alamat_customer);
-            $('#email').val(data.email);
-            $('#no_telpon').val(data.no_telpon);
+            $('#jenis_kategori').val(data.jenis_kategori);
           },
           error : function() {
               alert("Nothing Data");
@@ -180,7 +172,7 @@
             confirmButtonText: 'Ya, Hapus!'
         }).then(function () {
             $.ajax({
-                url : "{{ url('customer') }}" + '/' + id,
+                url : "{{ url('kategori') }}" + '/' + id,
                 type : "POST",
                 data : {'_method' : 'DELETE', '_token' : csrf_token},
                 success : function(data) {
@@ -205,21 +197,21 @@
       }
 
     $(function(){
-            $('#custom form').validator().on('submit', function (e) {
+            $('#kategori form').validator().on('submit', function (e) {
                 if (!e.isDefaultPrevented()){
                     var id = $('#id').val();
-                    if (save_method == 'add') url = "{{ url('customer') }}";
-                    else url = "{{ url('customer') . '/' }}" + id;
+                    if (save_method == 'add') url = "{{ url('kategori') }}";
+                    else url = "{{ url('kategori') . '/' }}" + id;
 
                     $.ajax({
                         url : url,
                         type : "POST",
-                        //data : $('#custom form').serialize(),
-                        data: new FormData($("#custom form")[0]),
+                        //data : $('#kategori form').serialize(),
+                        data: new FormData($("#kategori form")[0]),
                         contentType: false,
                         processData: false,
                         success : function(data) {
-                            $('#custom').modal('hide');
+                            $('#kategori').modal('hide');
                             table.ajax.reload();
                             swal({
                                 title: 'Sukses!',

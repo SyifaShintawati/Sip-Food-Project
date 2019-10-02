@@ -2,7 +2,7 @@
     <div class="modal-dialog modal-md" role="document">
         <div class="modal-content">
 
-            <form id="form-makanan" method="post" data-toggle="validator">{{ csrf_field() }} {{ method_field('POST') }}
+            <form id="form-makanan" method="post" data-toggle="validator" enctype="multipart/form-data">{{ csrf_field() }} {{ method_field('POST') }}
 
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -16,26 +16,32 @@
                         <input type="hidden" id="id" name="id">
 
                     <div class="form-group">
-                            <label for="id_supplier" class="col-form-label">{{ __('Penyuplai') }}</label>
-                                <select name="id_supplier" id="id_supplier" class="form-control" autofocus>
-                                    <option>Pilih Supplier</option>
-                                    @foreach($supplier as $valu)
-                                        <option value="{{$valu->id}}">{{$valu->nama_supplier}}</option>
-                                    @endforeach
-                                </select>
-                        </div>
-
-                    <div class="form-group">
-                        <label for="nama_makanan" class="col-form-label">{{ __('Nama Makanan') }}</label>
+                        <label for="deskripsi" class="col-form-label">{{ __('Nama Makanan') }}</label>
                             <input name="nama_makanan" id="nama_makanan" type="text" class="form-control" required autocomplete="off" autofocus>
                     </div>
 
+                    <div class="form-group">
+                        <label for="deskripsi" class="col-form-label">{{ __('Deskripsi Produk') }}</label>
+                            <input name="deskripsi" id="deskripsi" type="text" class="form-control" required autocomplete="off" autofocus>
+                    </div>
+
                    <div class="form-group">
-                        <label for="harga_makanan" class="col-form-label">{{ __('Harga Makanan') }}</label>
+                        <label for="harga_makanan" class="col-form-label">{{ __('Harga Asli') }}</label>
                             <input name="harga_makanan" id="harga_makanan" type="text" class="form-control" required autocomplete="off" autofocus>
+                   </div>
+
+                   <div class="form-group">
+                        <label for="pajak_makanan" class="col-form-label">{{ __('Harga Jual') }}</label>
+                            <input name="pajak_makanan" id="pajak_makanan" type="text" class="form-control" required autocomplete="off" autofocus readonly>
+                   </div>
+
+                   <div class="form-group">
+                        <label for="foto" class="col-form-label">{{ __('Foto') }}</label>
+                            <input name="foto" id="foto" type="file" class="form-control" autofocus>
+                   </div>
 
                     <div class="form-group">
-                        <label for="stok_makanan" class="col-form-label">{{ __('Stok Makanan') }}</label>
+                        <label for="stok_makanan" class="col-form-label">{{ __('Stok') }}</label>
                             <input name="stok_makanan" id="stok_makanan" type="text" class="form-control" required autocomplete="off">
                     </div>
 

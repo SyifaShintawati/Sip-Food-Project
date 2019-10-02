@@ -19,6 +19,9 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/managamen', function () {
+    return view('managemendata');
+});
 
 
 //customer
@@ -42,3 +45,13 @@ Route::get('api/transaksi', 'transaksiController@transaksi')->name('api.transaks
 Route::resource('/transaksi', 'transaksiController');
 Route::get('get-total/{id}/{jul}','transaksiController@total');
 Route::get('get-total/{id}/{jum}/{total}','transaksiController@total1');
+
+
+//produk
+Route::get('api/produk', 'produkController@produk')->name('api.produk');
+Route::resource('/produk', 'produkController');
+
+
+//kategori
+Route::get('api/kategori', 'kategoriController@kategori')->name('api.kategori');
+Route::resource('/kategori', 'kategoriController');

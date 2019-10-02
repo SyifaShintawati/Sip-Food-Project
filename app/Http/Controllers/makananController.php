@@ -40,13 +40,15 @@ class makananController extends Controller
      */
     public function store(Request $request)
     {
-        $makanan = new makanan;
-        $makanan->id_supplier = $request->id_supplier;
-        $makanan->nama_makanan = $request->nama_makanan;
-        $makanan->harga_makanan = $request->harga_makanan;
-        $makanan->stok_makanan = $request->stok_makanan;
-        $makanan->save();
-        return redirect('/makanan');
+        $input = $request->all();
+        $input['foto'] = null;
+
+        if ($request->hasFile('foto')){
+            $input['foto'] = '/upload/fotomakanan/'.str_slug($input['nama_makanan'], '-').'.'.$request->foto->getClientOriginalExtension();
+            $request->foto->move(public_path('/upload/fotomakanan/'), $input['foto']);
+        }
+
+        makanan::create($input);
 
         return response()->json([
             'succes' => true,
@@ -86,15 +88,22 @@ class makananController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
-        $makanan = makanan::find($request->id);
-        $makanan->id_supplier = $request->id_supplier;
-        $makanan->nama_makanan = $request->nama_makanan;
-        $makanan->harga_makanan = $request->harga_makanan;
-        $makanan->stok_makanan = $request->stok_makanan;
-        $makanan->save();
-        return redirect('/makanan');
+        $input = $request->all();
+        $makanan = makanan::findOrFail($id);
+
+        $input['foto'] = $makanan->foto;
+
+        if ($request->hasFile('foto')){
+            if (!$makanan->foto == NULL){
+                unlink(public_path($makanan->foto));
+            }
+            $input['foto'] = '/upload/fotomakanan/'.str_slug($input['nama_makanan'], '-').'.'.$request->foto->getClientOriginalExtension();
+            $request->foto->move(public_path('/upload/fotomakanan/'), $input['foto']);
+        }
+
+        $makanan->update($input);
 
         return response()->json([
             'succes' => true,
@@ -122,9 +131,16 @@ class makananController extends Controller
     public function makanan(){
         $makanan = makanan::with('supplier')->get();
         return Datatables::of($makanan)
+            ->addColumn('fotos', function($makanan){
+                if ($makanan->foto == NULL){
+                    return 'No Image';
+                }
+                return '<img class="rounded-square" width="50" height="50" src="'. url($makanan->foto) .'">';
+            })
             ->addColumn('action', function($makanan){
                 return '<a onclick="edit('. $makanan->id .')" class="btn btn-success btn-sm"><i class="glyphicon glyphicon-edit"></i> Edit</a>'.
                  ' <a onclick="hapus('. $makanan->id .')" class="btn btn-primary btn-sm"><i class="glyphicon glyphicon-trash"></i> Hapus</a>';
-            })->addIndexColumn()->make(true);
+            })
+            ->rawColumns(['fotos', 'action'])->addIndexColumn()->make(true);
     }
 }

@@ -40,13 +40,15 @@ class minumanController extends Controller
      */
     public function store(Request $request)
     {
-        $minuman = new minuman;
-        $minuman->id_supplier = $request->id_supplier;
-        $minuman->nama_minuman = $request->nama_minuman;
-        $minuman->harga_minuman = $request->harga_minuman;
-        $minuman->stok_minuman = $request->stok_minuman;
-        $minuman->save();
-        return redirect('/minuman');
+        $input = $request->all();
+        $input['foto'] = null;
+
+        if ($request->hasFile('foto')){
+            $input['foto'] = '/upload/fotominuman/'.str_slug($input['nama_minuman'], '-').'.'.$request->foto->getClientOriginalExtension();
+            $request->foto->move(public_path('/upload/fotominuman/'), $input['foto']);
+        }
+
+        minuman::create($input);
 
         return response()->json([
             'succes' => true,
@@ -86,15 +88,22 @@ class minumanController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
-        $minuman = minuman::find($request->id);
-        $minuman->id_supplier = $request->id_supplier;
-        $minuman->nama_minuman = $request->nama_minuman;
-        $minuman->harga_minuman = $request->harga_minuman;
-        $minuman->stok_minuman = $request->stok_minuman;
-        $minuman->save();
-        return redirect('/minuman');
+       $input = $request->all();
+               $minuman = minuman::findOrFail($id);
+
+               $input['foto'] = $minuman->foto;
+
+               if ($request->hasFile('foto')){
+                   if (!$minuman->foto == NULL){
+                       unlink(public_path($minuman->foto));
+                   }
+                   $input['foto'] = '/upload/fotominuman/'.str_slug($input['nama_minuman'], '-').'.'.$request->foto->getClientOriginalExtension();
+                   $request->foto->move(public_path('/upload/fotominuman/'), $input['foto']);
+               }
+
+               $minuman->update($input);
 
         return response()->json([
             'succes' => true,
@@ -123,9 +132,16 @@ class minumanController extends Controller
     {
         $minuman = minuman::with('supplier')->get();
         return Datatables::of($minuman)
+            ->addColumn('fotos', function($minuman){
+                if ($minuman->foto == NULL){
+                    return 'No Image';
+                }
+                return '<img class="rounded-square" width="50" height="50" src="'. url($minuman->foto) .'">';
+            })
             ->addColumn('action', function($minuman){
                 return '<a onclick="edit('. $minuman->id .')" class="btn btn-success btn-sm"><i class="glyphicon glyphicon-edit"></i> Edit</a>'.
                  ' <a onclick="hapus('. $minuman->id .')" class="btn btn-primary btn-sm"><i class="glyphicon glyphicon-trash"></i> Hapus</a>';
-            })->addIndexColumn()->make(true);
+            })
+            ->rawColumns(['fotos','action'])->addIndexColumn()->make(true);
     }
 }
